@@ -1,10 +1,9 @@
-import board
-import neopixel
+from app.leds import NUM_LEDS, locker
 import time
 
-NUM_LEDS = 300
-# init 'pixels' ( WS2812b ) LEDs
-pixels = neopixel.NeoPixel(board.D18, NUM_LEDS, brightness=1.0, auto_write=False)
+def fill(strip, color):
+    strip.fill(color)
+    strip.show()
 
 def colorWipe(strip, color, wait_ms=10, rate=1):
     """Wipe color across display a pixel at a time."""
@@ -49,6 +48,8 @@ def rainbowCycle(strip, wait_ms=20, iterations=5):
     for j in range(256*iterations):
         for i in range(strip.n):
             strip[i] = wheel((int(i * 256 / strip.n) + j) % 255)
+        if locker.lock:
+            return
         strip.show()
         time.sleep(wait_ms/1000.0)
 
@@ -62,25 +63,3 @@ def theaterChaseRainbow(strip, wait_ms=50):
             time.sleep(wait_ms/1000.0)
             for i in range(0, strip.n, 3):
                 strip[i+q] = 0
-
-# Main program logic follows:
-if __name__ == '__main__':
-    try:
-
-        while True:
-            # print ('Color wipe animations.')
-            colorWipe(pixels, (255, 0, 0), rate=1)  # Red wipe
-            colorWipe(pixels, (0, 255, 0), rate=1)  # Blue wipe
-            colorWipe(pixels, (0, 0, 255), rate=1)  # Green wipe
-            # # print ('Theater chase animations.')
-            theaterChase(pixels, (127, 127, 127))  # White theater chase
-            theaterChase(pixels, (127,   0,   0))  # Red theater chase
-            theaterChase(pixels, (  0,   0, 127))  # Blue theater chase
-            # # print ('Rainbow animations.')
-            rainbow(pixels, wait_ms=1)
-            rainbowCycle(pixels)
-            theaterChaseRainbow(pixels)
-
-    except KeyboardInterrupt:
-        colorWipe(pixels, (0,0,0), 1, rate=10)
-        # print('Ended')
