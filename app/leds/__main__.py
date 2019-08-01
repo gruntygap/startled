@@ -8,6 +8,7 @@ from app.leds import pixels
 try:
     while True:
         # print ('Color wipe animations.')
+        colorWipe(pixels, (100, 100, 100), rate=1)
         colorWipe(pixels, (255, 0, 0), rate=1)  # Red wipe
         colorWipe(pixels, (0, 255, 0), rate=1)  # Blue wipe
         colorWipe(pixels, (0, 0, 255), rate=1)  # Green wipe
