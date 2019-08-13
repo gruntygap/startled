@@ -15,7 +15,7 @@ def status():
 @performances.route("/on")
 def on():
 	stop_current()
-	colorWipe(pixels, (255,255,255))
+	colorWipe(pixels, (127,127,127))
 	# fill(pixels, (200,200,200))
 	return "LED ON"
 
@@ -31,7 +31,7 @@ def off():
 def rainbow():
 	stop_current()
 	global thread
-	thread = Thread(target=rainbowCycle, daemon=True, args=[pixels])
+	thread = Thread(target=rainbowCycle, daemon=True, kwargs=dict(strip=pixels, iterations=-1))
 	thread.start()
 	return "RAINBOW"
 
