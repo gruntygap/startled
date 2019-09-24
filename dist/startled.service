@@ -1,0 +1,13 @@
+[Unit]
+Description=startled, gunicorn, flask, etc.
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/home/pi/startled
+Environment="PATH=/home/pi/env/startled/bin"
+ExecStart=/home/pi/env/startled/bin/gunicorn --bind 0.0.0.0:8080 --access-logfile=../log/access.log --error-logfile ../log/err.log run:app
+
+[Install]
+WantedBy=multi-user.target
