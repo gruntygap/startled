@@ -10,3 +10,16 @@ This is just how I had to do it, with a different build of python, someone might
 Furthermore, turns out that using sudo just utilizes your local build and not your env, so maybe use something like:
 ```sudo /<relative-path-to-env>/bin/python run.py```
 Another important thing to note is that you have to use sudo to access the rpi pins on the raspberry pi (with the python neopixel package). [HOPING TO PORT THIS TO ARDUINO]
+
+## Current Setup:
+
+Python 3.5.3
+
+[Lightstrip](https://www.amazon.com/gp/product/B01CDTEG1O/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) (Purchased from Amazon.com)
+
+[Power Supply](https://www.amazon.com/gp/product/B06XK2DDW4/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1) (Purchased from Amazon.com)
+
+Raspberry Pi 3B (Purchased from ???, Microcenter???)
+
+Assorted Wires and ??SCOTCH TAPE?? (Purchased from ???, Microcenter???)
+
