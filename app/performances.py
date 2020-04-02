@@ -15,8 +15,9 @@ def status():
 @performances.route("/on")
 def on():
 	stop_current()
-	colorWipe(pixels, (127,127,127))
-	# fill(pixels, (200,200,200))
+	global thread
+	thread = Thread(target=colorWipe, daemon=True, kwargs=dict(strip=pixels, color=(127,127,127)))
+	thread.start()
 	return "LED ON"
 
 

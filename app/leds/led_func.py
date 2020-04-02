@@ -10,6 +10,8 @@ def colorWipe(strip, color, wait_ms=10, rate=1):
     for i in range(int(NUM_LEDS / rate)):
         for j in range(rate):
             strip[(i*rate) + j] = color
+            if locker.lock:
+                return
         strip.show()
         time.sleep(wait_ms/1000.0)
 
