@@ -1,4 +1,4 @@
-from flask import Blueprint, request, abort
+from flask import Blueprint, render_template, request, abort
 from threading import Thread
 
 from app.leds import pixels, locker
@@ -9,7 +9,7 @@ thread = None
 
 @performances.route("/")
 def status():
-	return "Give Current Status"
+	return render_template('index.html')
 
 
 @performances.route("/on")
@@ -37,8 +37,8 @@ def rainbow():
 	return "RAINBOW"
 
 def stop_current():
+	global thread, locker
 	if thread is not None:
-		global thread, locker
 		locker.lock = True
 		thread.join()
 		thread = None
