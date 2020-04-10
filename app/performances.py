@@ -28,6 +28,20 @@ def off():
 	return "LED OFF"
 
 
+# TODO: One day make this a POST request, it's only right. (i think)
+@performances.route("/static")
+def static():
+	r = request.args.get('r', default = 255, type = int)
+	g = request.args.get('g', default = 255, type = int)
+	b = request.args.get('b', default = 255, type = int)
+	l = request.args.get('l', default = 0.5, type = float)
+	if (r > 255 or r < 0 or g > 255 or g < 0 or b > 255 or b < 0 or l > 1.0 or l < 0.0):
+ 		return "Improper Color", 400
+	stop_current()
+	fill(pixels, (int(r*l),int(g*l),int(b*l)))
+	return "LED making color.."
+
+
 @performances.route("/rainbow")
 def rainbow():
 	stop_current()
@@ -35,6 +49,7 @@ def rainbow():
 	thread = Thread(target=rainbowCycle, daemon=True, kwargs=dict(strip=pixels, iterations=-1))
 	thread.start()
 	return "RAINBOW"
+
 
 def stop_current():
 	global thread, locker
