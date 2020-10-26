@@ -2,7 +2,7 @@ console.log('setting up...');
 
 let red, green, blue, lum, redLab,
     greenLab, blueLab, lumLab, output;
-const base = new URL('http://192.168.1.69:8080');
+const base = new URL('http://' + window.location.host);
 
 window.onload = function() {
     console.log('window loaded!');
@@ -18,30 +18,29 @@ window.onload = function() {
     blueLab = document.getElementById('blueLab');
     lumLab = document.getElementById('lumLab');
     output = document.getElementById('output');
-    // Sliders
-    red.onchange = specialColor;
-    green.onchange = specialColor;
-    blue.onchange = specialColor;
-    lum.onchange = specialColor;
     // Setting labels
     redLab.innerHTML = red.value;
     greenLab.innerHTML = green.value;
     blueLab.innerHTML = blue.value;
     lumLab.innerHTML = lum.value;
-    // Setting Background color change handler
+    // Setting Background color change handler 
     red.oninput = () => {
         previewColor();
+	specialColor();
         updateLabel(redLab, red);
     };
     green.oninput = () => {
         previewColor();
+	specialColor();
         updateLabel(greenLab, green);
     };
     blue.oninput = () => {
         previewColor();
+	specialColor();
         updateLabel(blueLab, blue);
     };
     lum.oninput = () => {
+	specialColor();
         updateLabel(lumLab, lum);
     };
     // Buttons
@@ -75,7 +74,7 @@ async function display(reqToRes) {
     try {        
         const res = await reqToRes;
         if (res.ok) {
-            output.innerHTML = res.text();    
+            output.innerHTML = await res.text();
         } else {
             output.innerHTML = `${res.status} -> ${res.statusText}`;
         }
