@@ -2,10 +2,17 @@ console.log('setting up...');
 
 let red, green, blue, lum, redLab,
     greenLab, blueLab, lumLab, output;
-const base = new URL('http://' + window.location.host);
+const base = new URL(window.location.origin);
+// setup service worker
+if ('serviceWorker' in navigator) {
+    console.log('looking at service worker');
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(res => console.log('sw reg')).catch(console.log);
+    });;
+}
 
 window.onload = function() {
-    console.log('window loaded!');
+	console.log('window loaded!');
     // Global Variables
     // slider vars
     red = document.getElementById('redVal');
@@ -25,22 +32,22 @@ window.onload = function() {
     lumLab.innerHTML = lum.value;
     // Setting Background color change handler 
     red.oninput = () => {
-        previewColor();
-	specialColor();
+		previewColor();
+		specialColor();
         updateLabel(redLab, red);
     };
     green.oninput = () => {
         previewColor();
-	specialColor();
+		specialColor();
         updateLabel(greenLab, green);
     };
     blue.oninput = () => {
         previewColor();
-	specialColor();
+		specialColor();
         updateLabel(blueLab, blue);
     };
     lum.oninput = () => {
-	specialColor();
+		specialColor();
         updateLabel(lumLab, lum);
     };
     // Buttons
