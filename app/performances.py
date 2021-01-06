@@ -44,11 +44,14 @@ def static():
 
 @performances.route("/rainbow")
 def rainbow():
-	stop_current()
-	global thread
-	thread = Thread(target=rainbowCycle, daemon=True, kwargs=dict(strip=pixels, iterations=-1))
-	thread.start()
-	return "RAINBOW"
+        speed = request.args.get('speed', default = 20, type = int)
+        if (speed < 1 or speed > 1000):
+                return "Improper Speed", 400
+        stop_current()
+        global thread
+        thread = Thread(target=rainbowCycle, daemon=True, kwargs=dict(strip=pixels, wait_ms=speed, iterations=-1))
+        thread.start()
+        return "RAINBOW"
 
 
 def stop_current():
