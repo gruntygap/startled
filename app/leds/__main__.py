@@ -2,11 +2,12 @@
 Script for testing the different animations without
 running the webserver and hitting the various endpoints
 '''
-from app.leds.led_func import colorWipe, theaterChase, rainbowCycle, rainbow, theaterChaseRainbow
+from app.leds.led_func import staticRainbowCycle, colorWipe, theaterChase, rainbowCycle, rainbow, theaterChaseRainbow
 from app.leds import pixels
 
 try:
     while True:
+        staticRainbowCycle(pixels)
         # print ('Color wipe animations.')
         colorWipe(pixels, (100, 100, 100), rate=1)
         colorWipe(pixels, (255, 0, 0), rate=1)  # Red wipe
@@ -17,7 +18,7 @@ try:
         theaterChase(pixels, (127,   0,   0))  # Red theater chase
         theaterChase(pixels, (  0,   0, 127))  # Blue theater chase
         # # print ('Rainbow animations.')
-        rainbow(pixels, wait_ms=1)
+        rainbow(pixels, 1)
         rainbowCycle(pixels)
         theaterChaseRainbow(pixels)
 

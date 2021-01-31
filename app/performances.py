@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, abort
 from threading import Thread
 
 from app.leds import pixels, locker
-from app.leds.led_func import rainbowCycle, fill, colorWipe
+from app.leds.led_func import staticRainbowCycle, rainbowCycle, fill, colorWipe
 
 performances = Blueprint('performance', __name__)
 thread = None
@@ -52,6 +52,18 @@ def rainbow():
         thread = Thread(target=rainbowCycle, daemon=True, kwargs=dict(strip=pixels, wait_ms=speed, iterations=-1))
         thread.start()
         return "RAINBOW"
+
+
+@performances.route("/staticrainbow")
+def staticrainbow():
+        speed = request.args.get('speed', default = 20, type = int)
+        if (speed < 1 or speed > 1000):
+                return "Improper Speed", 400
+        stop_current()
+        global thread
+        thread = Thread(target=staticRainbowCycle, daemon=True, kwargs=dict(strip=pixels, wait_ms=speed, iterations=-1))
+        thread.start()
+        return "static RAINBOW"
 
 
 def stop_current():
